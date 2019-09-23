@@ -1,28 +1,40 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-const [newFilterName, setFilterName] = useState('')
 
-const personsToShow = showAll
-    ? persons
-    : persons.filter(persons => ((persons.name.toLocaleLowerCase()).includes(newFilterName.toLocaleLowerCase())))
 
-const handleFilterChange = (event) => {
-    setFilterName(event.target.value)
-    if (event.target.value !== '') {
-        setShowAll(false)
+const Filter = ({ onFilterChange, persons }) => {
+    const [newFilterName, setFilterName] = useState('')
+
+
+
+    const handleFilterChange = (event) => {
+        console.log(event.target.value)
+        setFilterName(event.target.value)
+        console.log(event.target.value)
+
+        if (event.target.value === '') {
+            console.log("WTF")
+            onFilterChange(persons)
+        }
+        else {
+            const newPersons = (persons.filter(persons =>((persons.name.toLocaleLowerCase()).includes(newFilterName.toLocaleLowerCase()))))
+            console.log("PASSED", newPersons)
+            onFilterChange(persons.filter(persons =>
+                ((persons.name.toLocaleLowerCase()).includes(event.target.value.toLocaleLowerCase()))))
+        }
     }
-    else {
-        setShowAll(true)
-    }
-}
 
-const Filter = ({newFilterName}) => {
-    return (<form>
-        <div>
-            filter shown with: <input value={newFilterName} onChange={handleFilterChange} />
-        </div>
-    </form>);
-}
+    return (
+        <form>
+            <div>
+                filter shown with: <input
+                    value={newFilterName}
+                    onChange={handleFilterChange}
+                />
+            </div>
+        </form>
 
+    )
+}
 
 export default Filter
