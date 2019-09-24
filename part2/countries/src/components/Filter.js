@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 
 
-const Filter = ({ onFilterChange, persons }) => {
+const Filter = ({ onFilterChange, countries }) => {
     const [newFilterName, setFilterName] = useState('')
     console.log("!!!!", newFilterName)
     
@@ -15,13 +15,13 @@ const Filter = ({ onFilterChange, persons }) => {
 
         if (event.target.value === '') {
             console.log("=== '' ")
-            onFilterChange(persons)
+            onFilterChange(countries)
         }
         else {
-            const newPersons = (persons.filter(persons =>((persons.name.toLocaleLowerCase()).includes(newFilterName.toLocaleLowerCase()))))
-            console.log("PASSED", newPersons)
-            onFilterChange(persons.filter(persons =>
-                ((persons.name.toLocaleLowerCase()).includes(event.target.value.toLocaleLowerCase()))))
+            const newCountries = (countries.filter(countries =>((countries.name.toLocaleLowerCase()).includes(newFilterName.toLocaleLowerCase()))))
+            console.log("PASSED", newCountries)
+            onFilterChange(countries.filter(countries =>
+                ((countries.name.toLocaleLowerCase()).includes(event.target.value.toLocaleLowerCase()))))
         }
     }
 

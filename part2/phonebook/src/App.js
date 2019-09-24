@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import NameList from './components/NameList'
 import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
@@ -6,15 +7,19 @@ import Filter from './components/Filter'
 
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456', id: 1 },
-    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
-    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
-  ])
-
+  const [persons, setPersons] = useState([])
   const [personsToShow, setPersonsToShow] = useState(persons)
   const [nextID, setnextID] = useState(5)
+  
+ 
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        setPersons(response.data)
+      })
+  }, [])
 
   const newID = () => {
     setnextID(nextID + 1)
@@ -35,8 +40,8 @@ const App = () => {
       window.alert(`${newName} is already added to phonebook`)
     }
     else {
-      setPersons(persons.concat(personObject))
       setPersonsToShow(persons.concat(personObject))
+      setPersons(persons.concat(personObject))
     }
 
   }
@@ -56,7 +61,11 @@ const App = () => {
 
 
       <h3>Numbers</h3>
-      <NameList key={personsToShow.id} persons={personsToShow} />
+      <NameList  persons={personsToShow} />
+
+      <p>Note: I couldn't get the filter and namelist to work without one being dependent on the other. 
+        the names will only display on change in the filter...
+      </p>
 
     </div>
 
