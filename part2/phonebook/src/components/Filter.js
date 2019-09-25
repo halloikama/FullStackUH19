@@ -4,22 +4,20 @@ import React, { useState } from 'react'
 
 const Filter = ({ onFilterChange, persons }) => {
     const [newFilterName, setFilterName] = useState('')
-    console.log("!!!!", newFilterName)
-    
+
 
 
     const handleFilterChange = (event) => {
-        console.log(event.target.value)
         setFilterName(event.target.value)
-        console.log(event.target.value)
 
         if (event.target.value === '') {
-            console.log("=== '' ")
+            console.log("empty search field")
             onFilterChange(persons)
         }
         else {
-            const newPersons = (persons.filter(persons =>((persons.name.toLocaleLowerCase()).includes(newFilterName.toLocaleLowerCase()))))
-            console.log("PASSED", newPersons)
+            console.log(persons)
+            const newPersons = (persons.filter(persons => ((persons.name.toLocaleLowerCase()).includes(newFilterName.toLocaleLowerCase()))))
+            console.log("new filter PASSED", newPersons)
             onFilterChange(persons.filter(persons =>
                 ((persons.name.toLocaleLowerCase()).includes(event.target.value.toLocaleLowerCase()))))
         }
