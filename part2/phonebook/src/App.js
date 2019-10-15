@@ -111,7 +111,7 @@ const App = () => {
       <h1>Phonebook</h1>
       <Notification message={errorMessage} style={notificationStyle} />
       <Filter persons={persons} onFilterChange={setPersonsToShow} />
-      <h3>add a new</h3>
+      <h3>add a new person</h3>
       <PersonForm addPerson={addPerson} />
       <h3>Numbers</h3>
       <NameList persons={personsToShow} handleDeleButton={handleDeleButton} />
