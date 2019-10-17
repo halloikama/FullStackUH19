@@ -30,7 +30,6 @@ const App = () => {
       number: newNumber,
     }
 
-
     if ((persons.filter(person => (person.name === newName))).length !== 0) {
       const person = (persons.find(person => person.name === newName))
       console.log(person)
@@ -61,14 +60,27 @@ const App = () => {
         .then(returnedPerson => {
           setPersons(persons.concat(returnedPerson))
           setPersonsToShow(persons.concat(returnedPerson))
+          setErrorMessage(
+            `Added ${personObject.name} to phone book`
+          )
+          setNotificationStyle('success')
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
         })
-      setErrorMessage(
-        `Added ${personObject.name} to phone book`
-      )
-      setNotificationStyle('success')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+        .catch(error => {
+          console.log(error.response.data)
+          const message = error.response.data.error
+          console.log(typeof error.response.data)
+          setErrorMessage(
+            `${message}`
+          )
+          setNotificationStyle('fail')
+          setTimeout(() => {
+            setErrorMessage(null)
+
+          }, 5000)
+        })
 
     }
 
@@ -91,17 +103,17 @@ const App = () => {
           setNotificationStyle('fail')
           setTimeout(() => {
             setErrorMessage(null)
-            
+
           }, 5000)
           setPersons(persons.filter(x => x.id !== person.id))
           setPersonsToShow(persons.filter(x => x.id !== person.id))
         })
-        setErrorMessage(
-          `${person.name} has been removed from phonebook`
-        )
-        setTimeout(() => {
-          setErrorMessage(null)
-        }, 5000)
+      setErrorMessage(
+        `${person.name} has been removed from phonebook`
+      )
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
     }
   }
 
